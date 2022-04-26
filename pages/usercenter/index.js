@@ -1,9 +1,10 @@
-import { fetchUserCenter } from '../../services/usercenter/fetchUsercenter';
+import {
+  fetchUserCenter
+} from '../../services/usercenter/fetchUsercenter';
 import Toast from 'tdesign-miniprogram/toast/index';
 
 const menuData = [
-  [
-    {
+  [{
       title: '收货地址',
       tit: '',
       url: '',
@@ -22,8 +23,7 @@ const menuData = [
       type: 'point',
     },
   ],
-  [
-    {
+  [{
       title: '帮助中心',
       tit: '',
       url: '',
@@ -39,8 +39,7 @@ const menuData = [
   ],
 ];
 
-const orderTagInfos = [
-  {
+const orderTagInfos = [{
     title: '待付款',
     iconName: 'wallet',
     orderNum: 0,
@@ -144,12 +143,18 @@ Page({
     );
   },
 
-  onClickCell({ currentTarget }) {
-    const { type } = currentTarget.dataset;
+  onClickCell({
+    currentTarget
+  }) {
+    const {
+      type
+    } = currentTarget.dataset;
 
     switch (type) {
       case 'address': {
-        wx.navigateTo({ url: '/pages/usercenter/address/list/index' });
+        wx.navigateTo({
+          url: '/pages/usercenter/address/list/index'
+        });
         break;
       }
       case 'service': {
@@ -177,7 +182,9 @@ Page({
         break;
       }
       case 'coupon': {
-        wx.navigateTo({ url: '/pages/coupon/coupon-list/index' });
+        wx.navigateTo({
+          url: '/pages/coupon/coupon-list/index'
+        });
         break;
       }
       default: {
@@ -197,22 +204,32 @@ Page({
     const status = e.detail.tabType;
 
     if (status === 0) {
-      wx.navigateTo({ url: '/pages/order/after-service-list/index' });
+      wx.navigateTo({
+        url: '/pages/order/after-service-list/index'
+      });
     } else {
-      wx.navigateTo({ url: `/pages/order/order-list/index?status=${status}` });
+      wx.navigateTo({
+        url: `/pages/order/order-list/index?status=${status}`
+      });
     }
   },
 
   jumpAllOrder() {
-    wx.navigateTo({ url: '/pages/order/order-list/index' });
+    wx.navigateTo({
+      url: '/pages/order/order-list/index'
+    });
   },
 
   openMakePhone() {
-    this.setData({ showMakePhone: true });
+    this.setData({
+      showMakePhone: true
+    });
   },
 
   closeMakePhone() {
-    this.setData({ showMakePhone: false });
+    this.setData({
+      showMakePhone: false
+    });
   },
 
   call() {
@@ -222,9 +239,15 @@ Page({
   },
 
   gotoUserEditPage() {
-    const { currAuthStep } = this.data;
-    if (currAuthStep === 2) {
-      wx.navigateTo({ url: '/pages/usercenter/person-info/index' });
+    const {
+      currAuthStep
+    } = this.data;
+    if (currAuthStep === 1) {
+
+    } else if (currAuthStep === 2) {
+      wx.navigateTo({
+        url: '/pages/usercenter/person-info/index'
+      });
     } else {
       this.fetUseriInfoHandle();
     }
@@ -232,7 +255,10 @@ Page({
 
   getVersionInfo() {
     const versionInfo = wx.getAccountInfoSync();
-    const { version, envVersion = __wxConfig } = versionInfo.miniProgram;
+    const {
+      version,
+      envVersion = __wxConfig
+    } = versionInfo.miniProgram;
     this.setData({
       versionNo: envVersion === 'release' ? version : envVersion,
     });
