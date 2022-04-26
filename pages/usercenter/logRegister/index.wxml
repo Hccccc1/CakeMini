@@ -1,2 +1,2 @@
 <!--pages/usercenter/logRegister/index.wxml-->
-<text>pages/usercenter/logRegister/index.wxml</text>
+<button bindtap="loginWithWechat">微信授权登录</button>

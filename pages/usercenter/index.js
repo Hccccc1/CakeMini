@@ -243,7 +243,9 @@ Page({
       currAuthStep
     } = this.data;
     if (currAuthStep === 1) {
-
+      wx.navigateTo({
+        url: '/pages/usercenter/logRegister/index',
+      })
     } else if (currAuthStep === 2) {
       wx.navigateTo({
         url: '/pages/usercenter/person-info/index'

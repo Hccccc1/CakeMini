@@ -29,7 +29,8 @@
     "pages/order/delivery-detail/index",
     "pages/order/invoice/index",
     "pages/usercenter/name-edit/index",
-    "pages/usercenter/logRegister/index"
+    "pages/usercenter/logRegister/index",
+    "pages/usercenter/logRegister/userRegister/index"
   ],
   "tabBar": {
     "custom": true,
