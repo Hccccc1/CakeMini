@@ -110,26 +110,31 @@ Page({
               if (permission.confirm) {
                 console.log('register now')
 
-                var jumpUrl = '/pages/usercenter/logRegister/userRegister/index?avatarUrl=' +
-                  res.userInfo.avatarUrl +
-                  '&nickName=' +
-                  res.userInfo.nickName;
+                // var jumpUrl = '/pages/usercenter/logRegister/userRegister/index?avatarUrl=' +
+                //   res.userInfo.avatarUrl +
+                //   '&nickName=' +
+                //   res.userInfo.nickName;
 
-                console.log(jumpUrl)
-
-                wx.navigateTo({
-                  url: jumpUrl,
-                  events: {
-                    sendUserInfo: function (data) {
-                      console.log('data -> ' + data)
-                    }
-                  },
-                  // success: function (res) {
-                  //   res.eventChannel.emit('recvUserInfo', {
-                  //     data: userInfo
-                  //   })
-                  // }
+                wx.chooseLocation({
+                  success: (result) => {
+                    console.log(result)
+                  }
                 })
+
+                // wx.navigateTo({
+                //   // url: jumpUrl,
+                //   url: '/pages/usercenter/address/edit/index',
+                //   events: {
+                //     sendUserInfo: function (data) {
+                //       console.log('data -> ' + data)
+                //     }
+                //   },
+                //   // success: function (res) {
+                //   //   res.eventChannel.emit('recvUserInfo', {
+                //   //     data: userInfo
+                //   //   })
+                //   // }
+                // })
               } else if (permission.cancel) {
                 console.log('canceled')
               }

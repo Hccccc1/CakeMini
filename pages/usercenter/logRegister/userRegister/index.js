@@ -24,6 +24,12 @@ Page({
       nickName: options.nickName
     })
     // console.log(options.nickName)
+
+    wx.chooseAddress({
+      success: (result) => {
+        console.log(result)
+      },
+    })
   },
 
   /**
