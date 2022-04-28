@@ -117,7 +117,18 @@ Page({
 
                 wx.chooseLocation({
                   success: (result) => {
-                    console.log(result)
+                    console.log(result);
+                                                                                                                      
+                    wx.cloud.callFunction({
+                      name: 'locService',
+                      data: {
+                        type: 'getLocInfo',
+                        latitude: result.latitude,
+                        longitude: result.longitude
+                      }
+                    }).then(resp => {
+                      console.log(resp)
+                    });
                   }
                 })
 
