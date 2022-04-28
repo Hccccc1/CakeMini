@@ -1,6 +1,7 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/usercenter/index",
+    "pages/usercenter/address/list/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -9,5 +10,5 @@
     "navigationBarTextStyle": "black"
   },
   "style": "v2",
-  "sitemapLocation": "./sitemap.json"
+  "sitemapLocation": "sitemap.json"
 }
