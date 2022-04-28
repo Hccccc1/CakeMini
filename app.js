@@ -13,4 +13,10 @@ App({
   onShow: function () {
     updateManager();
   },
+
+  globalData: {
+    nickName: '',
+    avatarUrl: '',
+    default: ''
+  }
 });

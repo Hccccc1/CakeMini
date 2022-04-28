@@ -92,6 +92,8 @@ Page({
       desc: 'get user profile',
     }).then(res => {
 
+      console.log('user profile', res)
+
       wx.cloud.callFunction({
         name: 'userService',
         data: {
@@ -115,36 +117,35 @@ Page({
                 //   '&nickName=' +
                 //   res.userInfo.nickName;
 
-                wx.chooseLocation({
-                  success: (result) => {
-                    console.log(result);
-                                                                                                                      
-                    wx.cloud.callFunction({
-                      name: 'locService',
-                      data: {
-                        type: 'getLocInfo',
-                        latitude: result.latitude,
-                        longitude: result.longitude
-                      }
-                    }).then(resp => {
-                      console.log(resp)
-                    });
-                  }
-                })
+                // wx.chooseLocation({
+                //     success: (result) => {
+                //       console.log(result);
 
-                // wx.navigateTo({
-                //   // url: jumpUrl,
-                //   url: '/pages/usercenter/address/edit/index',
-                //   events: {
-                //     sendUserInfo: function (data) {
-                //       console.log('data -> ' + data)
-                //     }
-                //   },
-                //   // success: function (res) {
-                //   //   res.eventChannel.emit('recvUserInfo', {
-                //   //     data: userInfo
-                //   //   })
-                //   // }
+                // wx.cloud.callFunction({
+                //   name: 'locService',
+                //   data: {
+                //     type: 'getLocInfo',
+                //     latitude: result.latitude,
+                //     longitude: result.longitude
+                //   }
+                // }).then(resp => {
+                //   console.log(resp)
+                wx.navigateTo({
+                  // url: jumpUrl,
+                  url: '/pages/usercenter/address/edit/index?avatarUrl=' + res.userInfo.avatarUrl,
+                  events: {
+                    sendUserInfo: function (data) {
+                      console.log('data -> ' + data)
+                    }
+                  },
+                  // success: function (res) {
+                  //   res.eventChannel.emit('recvUserInfo', {
+                  //     data: userInfo
+                  //   })
+                  // }
+                })
+                // });
+                //   }
                 // })
               } else if (permission.cancel) {
                 console.log('canceled')

@@ -59,6 +59,10 @@ Page({
     visible: false,
     labelValue: '',
     columns: 3,
+    userInfo: {
+      avatarUrl: '',
+      nickName: ''
+    }
   },
   privateData: {
     verifyTips: '',
@@ -68,6 +72,8 @@ Page({
       id
     } = options;
     this.init(id);
+
+    console.log('edit page', options)
   },
   onUnload() {
     if (!this.hasSava) {
