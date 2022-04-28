@@ -1,7 +1,9 @@
 {
   "pages": [
     "pages/usercenter/index",
-    "pages/usercenter/address/list/index"
+    "pages/usercenter/address/list/index",
+    "pages/usercenter/loginRegister/index",
+    "pages/usercenter/address/edit/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

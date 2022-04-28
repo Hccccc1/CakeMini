@@ -155,7 +155,9 @@ Page({
     } = this.data;
 
     if (currAuthStep === 1) {
-
+      wx.navigateTo({
+        url: '/pages/usercenter/loginRegister/index',
+      })
     }
   }
 })
