@@ -7,6 +7,9 @@ import {
   resolveAddress,
   rejectAddress
 } from './util';
+import {
+  addressParse
+} from '../../../../utils/addressParse';
 
 const innerPhoneReg =
   '^1(?:3\\d|4[4-9]|5[0-35-9]|6[67]|7[0-8]|8\\d|9\\d)\\d{8}$';
@@ -315,8 +318,8 @@ Page({
   },
 
   locFromGeo: function (_latitude, _longitude) {
-    return new Promise((resolve) => {
-      wx.cloud.callFunction({
+    return new Promise(async (resolve, reject) => {
+      await wx.cloud.callFunction({
         name: 'locService',
         data: {
           type: 'getLocInfo',
@@ -326,7 +329,7 @@ Page({
       }).then(resp => {
         resolve(resp)
       }).catch(e => {
-        resolve(e)
+        reject(e)
       })
     })
   },
@@ -346,8 +349,52 @@ Page({
               //   latitude: res.latitude,
               //   longitude: res.longitude,
               // });
-              await this.locFromGeo(res.latitude, res.longitude).then(res => {
-                console.log(res)
+              this.locFromGeo(res.latitude, res.longitude).then(async res => {
+                const locResult = JSON.parse(res.result);
+                const ad_info = locResult.result.ad_info;
+                const formatted_addr = locResult.result.formatted_addresses;
+
+                const target = {
+                  countryName: '中国',
+                  countryCode: 'chn',
+                  provinceName: ad_info.province,
+                  cityName: ad_info.city,
+                  districtName: ad_info.district,
+                  detailAddress: formatted_addr.recommend,
+                };
+
+                try {
+                  const {
+                    provinceCode,
+                    cityCode,
+                    districtCode
+                  } =
+                  await addressParse(target.provinceName, target.cityName, target.districtName);
+
+                  const params = Object.assign(target, {
+                    provinceCode,
+                    cityCode,
+                    districtCode
+                  });
+
+                  console.log('before locateState', this.data.locationState)
+
+                  const {
+                    locationState
+                  } = this.data;
+                  const wxAddress = params;
+
+                  this.setData({
+                    locationState: {
+                      ...locationState,
+                      ...wxAddress
+                    }
+                  });
+
+                  console.log('locateState', this.data.locationState)
+                } catch (e) {
+                  console.error('地址解析错误', e)
+                }
               }).catch(e => {
                 console.error(e)
               })
