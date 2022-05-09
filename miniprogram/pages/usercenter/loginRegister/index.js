@@ -87,22 +87,34 @@ Page({
           type: 'getUserInfo'
         }
       }).then(resp => {
-        console.log('res', resp)
-
         if (resp.result.data.length === 1) {
           // 用户存在无需注册
+          wx.navigateBack();
         } else {
           // 提示用户注册
           wx.showModal({
             title: 'tips',
             content: 'register?',
-            success: res => {
+            success: async res => {
               if (res.confirm) {
-                console.log();
 
-                wx.navigateTo({
-                  url: '/pages/usercenter/address/edit/index',
-                })
+                await wx.cloud.callFunction({
+                  name: 'userService',
+                  data: {
+                    type: 'userRegister',
+                    avatarUrl: user.userInfo.avatarUrl,
+                    nickName: user.userInfo.nickName,
+                    addresses: []
+                  },
+                  success: () => {
+                    wx.navigateTo({
+                      url: '/pages/usercenter/address/edit/index',
+                    });
+                  },
+                  fail: () => {
+                    wx.navigateBack();
+                  }
+                });
               } else if (res.cancel) {
                 wx.navigateBack();
               } else

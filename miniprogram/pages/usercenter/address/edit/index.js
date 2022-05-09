@@ -424,7 +424,7 @@ Page({
       },
     );
   },
-  formSubmit() {
+  formSubmit: async function () {
     const {
       submitActive
     } = this.data;
@@ -443,6 +443,17 @@ Page({
     } = this.data;
 
     this.hasSava = true;
+
+    await wx.cloud.callFunction({
+      name: 'addressManage',
+      data: {
+        type: 'addressAdd'
+      }
+    }).then(addResp => {
+      console.log('add', addResp)
+    })
+
+    console.log('after add')
 
     resolveAddress({
       saasId: '88888888',
