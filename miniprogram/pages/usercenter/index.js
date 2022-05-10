@@ -86,6 +86,8 @@ const getDefaultData = () => ({
   versionNo: '1.0',
 });
 
+const app = getApp();
+
 Page({
 
   /**
@@ -111,7 +113,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
+    console.log('usercenter show');
 
+    if (app.globalData.isLogin) {
+      this.setData({
+        'userInfo.avatarUrl': app.globalData.user.avatar,
+        'userInfo.nickName': app.globalData.user.nickname
+      })
+    }
   },
 
   /**

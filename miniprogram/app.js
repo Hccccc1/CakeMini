@@ -8,5 +8,13 @@ App({
         traceUser: true
       })
     }
+  },
+  globalData: {
+    isLogin: false,
+    user: {
+      avatar: '',
+      nickname: ''
+    },
+    openID: ''
   }
 })

@@ -444,27 +444,20 @@ Page({
 
     this.hasSava = true;
 
-    await wx.cloud.callFunction({
-      name: 'addressManage',
-      data: {
-        type: 'addressAdd'
-      }
-    }).then(addResp => {
-      console.log('add', addResp)
-    })
+    const db = wx.cloud.database();
+    const openid = getApp().openID;
 
-    console.log('after add')
+    const record = await db.collection('users').where({
+      _openid: openid
+    }).get();
 
-    resolveAddress({
-      saasId: '88888888',
-      uid: `88888888205500`,
-      authToken: null,
-      id: locationState.addressId,
-      addressId: locationState.addressId,
-      phone: locationState.phone,
+    const user = record.data[0];
+    let userAddresses = user.userAddresses;
+    var id = userAddresses.length + 1;
+
+    userAddresses.push({
       name: locationState.name,
-      countryName: locationState.countryName,
-      countryCode: locationState.countryCode,
+      phone: locationState.phone,
       provinceName: locationState.provinceName,
       provinceCode: locationState.provinceCode,
       cityName: locationState.cityName,
@@ -472,12 +465,46 @@ Page({
       districtName: locationState.districtName,
       districtCode: locationState.districtCode,
       detailAddress: locationState.detailAddress,
-      isDefault: locationState.isDefault === 1 ? 1 : 0,
       addressTag: locationState.addressTag,
-      latitude: locationState.latitude,
-      longitude: locationState.longitude,
-      storeId: null,
+      addressId: id
     });
+
+    db.collection('users').where({
+      _openid: openid
+    }).update({
+      data: {
+        userAddresses: userAddresses
+      },
+      success: () => {
+        console.log('succeed in add')
+        getApp().globalData.isLogin = true;
+      }
+    })
+    /*
+        resolveAddress({
+          saasId: '88888888',
+          uid: `88888888205500`,
+          authToken: null,
+          id: locationState.addressId,
+          addressId: locationState.addressId,
+          phone: locationState.phone,
+          name: locationState.name,
+          countryName: locationState.countryName,
+          countryCode: locationState.countryCode,
+          provinceName: locationState.provinceName,
+          provinceCode: locationState.provinceCode,
+          cityName: locationState.cityName,
+          cityCode: locationState.cityCode,
+          districtName: locationState.districtName,
+          districtCode: locationState.districtCode,
+          detailAddress: locationState.detailAddress,
+          isDefault: locationState.isDefault === 1 ? 1 : 0,
+          addressTag: locationState.addressTag,
+          latitude: locationState.latitude,
+          longitude: locationState.longitude,
+          storeId: null,
+        });
+    */
 
     wx.navigateBack({
       delta: 1

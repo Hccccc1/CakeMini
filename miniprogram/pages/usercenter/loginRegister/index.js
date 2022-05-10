@@ -87,8 +87,16 @@ Page({
           type: 'getUserInfo'
         }
       }).then(resp => {
-        if (resp.result.data.length === 1) {
+        const app = getApp();
+        app.globalData.openID = resp.result.openID;
+
+        if (resp.result.user.data.length === 1) {
           // 用户存在无需注册
+          // app.globalData.user.avatar = 
+          // console.log('resp', resp);
+          app.globalData.user.avatar = resp.result.user.data[0].userAvatar;
+          app.globalData.user.nickname = resp.result.user.data[0].userNickName;
+          app.globalData.isLogin = true;
           wx.navigateBack();
         } else {
           // 提示用户注册
@@ -98,7 +106,7 @@ Page({
             success: async res => {
               if (res.confirm) {
 
-                await wx.cloud.callFunction({
+                wx.cloud.callFunction({
                   name: 'userService',
                   data: {
                     type: 'userRegister',
