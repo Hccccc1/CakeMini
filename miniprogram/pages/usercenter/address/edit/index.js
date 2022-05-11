@@ -455,9 +455,11 @@ Page({
     let userAddresses = user.userAddresses;
     var id = userAddresses.length + 1;
 
+    console.log('location', locationState);
+
     userAddresses.push({
       name: locationState.name,
-      phone: locationState.phone,
+      phoneNumber: locationState.phone,
       provinceName: locationState.provinceName,
       provinceCode: locationState.provinceCode,
       cityName: locationState.cityName,
@@ -465,20 +467,29 @@ Page({
       districtName: locationState.districtName,
       districtCode: locationState.districtCode,
       detailAddress: locationState.detailAddress,
+      address: locationState.provinceName +
+        locationState.cityName +
+        locationState.districtName +
+        locationState.detailAddress,
       addressTag: locationState.addressTag,
-      addressId: id
+      addressId: id,
+      isDefault: locationState.isDefault
     });
 
-    db.collection('users').where({
+    await db.collection('users').where({
       _openid: openid
     }).update({
       data: {
         userAddresses: userAddresses
-      },
-      success: () => {
-        console.log('succeed in add')
-        getApp().globalData.isLogin = true;
       }
+    }).then(() => {
+      console.log('succeed in add')
+      getApp().globalData.isLogin = true;
+      getApp().globalData.user.avatar = user.userAvatar;
+      getApp().globalData.user.nickname = user.userNickName;
+      wx.navigateBack({
+        delta: 2
+      });
     })
     /*
         resolveAddress({
@@ -505,10 +516,6 @@ Page({
           storeId: null,
         });
     */
-
-    wx.navigateBack({
-      delta: 1
-    });
   },
 
   getWeixinAddress(e) {

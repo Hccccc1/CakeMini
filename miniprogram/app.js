@@ -13,7 +13,8 @@ App({
     isLogin: false,
     user: {
       avatar: '',
-      nickname: ''
+      nickname: '',
+      phone: ''
     },
     openID: ''
   }

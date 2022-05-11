@@ -118,7 +118,8 @@ Page({
     if (app.globalData.isLogin) {
       this.setData({
         'userInfo.avatarUrl': app.globalData.user.avatar,
-        'userInfo.nickName': app.globalData.user.nickname
+        'userInfo.nickName': app.globalData.user.nickname,
+        'currAuthStep': 3
       })
     }
   },
@@ -167,6 +168,40 @@ Page({
       wx.navigateTo({
         url: '/pages/usercenter/loginRegister/index',
       })
+    }
+  },
+
+  onClickCell({
+    currentTarget
+  }) {
+    const {
+      type
+    } = currentTarget.dataset;
+
+    switch (type) {
+      case 'address':
+        console.log('收货地址')
+        if (getApp().globalData.isLogin) {
+          wx.navigateTo({
+            url: '/pages/usercenter/address/list/index'
+          });
+        }
+        break;
+      case 'coupon':
+        console.log('优惠券')
+        break;
+      case 'point':
+        console.log('积分')
+        break;
+      case 'help-center':
+        console.log('帮助中心')
+        break;
+      case 'service':
+        console.log('服务热线')
+        break;
+
+      default:
+        break;
     }
   }
 })
