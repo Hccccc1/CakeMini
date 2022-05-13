@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "t-cell-group": "tdesign-miniprogram/cell-group/cell-group",
+    "t-cell": "tdesign-miniprogram/cell/cell",
+    "t-order-group": "./components/order-group/index",
+    "t-user-center-card": "./components/user-center-card/index"
+  }
+}
